@@ -1,9 +1,136 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Página Inicial</title>
-</head>
-<body>
-	<p> Hello World, this is my contribuition <p>
-</body>
+<!DOCTYPE>
+<html lang="pt-br">
+    <head>
+        <title>Curso de Bootstrap - Rows</title>
+        <meta http-equiv="X-UA-Compatible" content="IE-edge">
+        <meta name="viewport" content="width=devide-width, initial-scale=1">
+        <meta charset="utf-8" >
+        <meta name="author" content="Lincon Brito">
+        <meta name="generator" content="Brackets">
+        
+        
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <style>
+            ul{
+                margin: 0; padding: 0;
+            }
+            li{
+                list-style: none;
+                display: inline-block;
+            }
+            li a{
+                text-decoration: none;
+                background-color: #09c;
+                margin-bottom: 1px;
+                padding: 5px 50px;
+                color: #FFF;
+                margin-left: -4;
+            }
+            li a:hover{
+                background-color: #6CF;
+            }
+            
+            p, h1 { text-align: center; font-family:Arial,sans-serif}
+            img.icone {max-width: 150px; margin:0 auto; display: block}
+            .rowbuttom{
+                height: 200px
+            }
+            .img-perfil{
+                max-width: 150px;
+                float: right;
+                margin-top: 20px;
+                margin-right: 20px;
+            }
+            .red{background: red}
+            .blue{background: blue}
+            .pink{background: pink}
+            .green{background: green}
+        </style>
+        
+        <script>
+            function sorteioNumero(){
+                resultado.innerHTML = Math.random() * 50;
+            }
+            window.onload = sorteioNumero;
+        </script>
+        
+    </head>
+    <body>
+        <p id= "resultado"></p>
+        <p><a href="http://www.google.com.br" target="_blank">Leia me</a></p>
+        
+        <ul>
+            <li><a href="index.html">Compra</a></li>
+            <li><a>Venda</a></li>
+            <li><a>Login</a></li>
+        </ul>
+        <section id="nav-interno">
+            <a href="#html5">HTML5</a> |
+        </section>
+        
+        <div class="container-flud">
+            <div class="row">
+                <div class="col-sm-6 col-md-4 col-lg-2">
+                    <img class="icone" src="../img/icone_adobe_muse_grande.png">
+                    <h1>Adobe Muse</h1>
+                    <p>Nossa <i>senhora</i> da <b>coisas</b> impossíveis que procuramos em vão<br>Vem, soliníssima,<br>Soleníssima e <u>cheia</u> de uma vontade oculta de soluçar</p>
+                </div> 
+
+                <div class="col-sm-6 col-md-4 col-lg-2">
+                    <img class="icone" src="../img/icone_adobe_portfolio_grande.png" 
+                         style="float:left;border: 1px solid #666">
+                    <h1>Adobe Portfolio</h1>
+                    <p>Talvez por que a alma é grande e a vida é pequena<br>E todos os gestos não saem do nosso corpo<br>E só alcançamos onde o nosso braço chega<br>E só vendo onde o nossos olhos podem chegar</p>
+</div>
+
+                <div class="clearfix visible-sm-block"></div>
+
+                <div class="col-sm-6 col-md-4 col-lg-2">
+                    <img class="icone" src="../img/icone_aftereffects_grande.png">
+                    <h1>Adobe After Effects</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vehicula iaculis nibhTalvez por que a alma é grande e a vida é pequena<br>E todos os gestos não saem do nosso corpo<br>E só alcançamos onde o nosso braço chega<br>E só vendo onde o nossos olhos podem chegar</p>
+</div>
+
+                <div class="clearfix visible-md-block"></div>
+
+                <div class="col-sm-6 col-md-4 col-lg-2">
+                    <img class="icone" src="../img/icone_css_grande.png">
+                    <h1>CSS 3</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vehicula iaculis nibh</p>
+</div> 
+
+                <div class="clearfix visible-sm-block"></div>
+
+                <div class="col-sm-6 col-md-4 col-lg-2">
+                    <img class="icone" src="../img/icone_html_grande.png">
+                    <h1 id="html5">HTML 5</h1>
+                    <p>Lorem ipsum doloTalvez por que a alma é grande e a vida é pequena<br>E todos os gestos não saem do nosso corpo<br>E só alcançamos onde o nosso braço chega<br>E só vendo onde o nossos olhos podem chegarr sit amet, consectetur adipiscing elit. Proin vehicula iaculis nibh</p>
+</div>
+
+                <div class="col-sm-6 col-md-4 col-lg-2">
+                <img class="icone" src="../img/icone_google_adwords_grande.png">
+                <h1>Google Adwords</h1>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin vehicula iaculis nibh</p>
+            </div>
+            </div>
+            <div class="row">
+                <div class="rowbuttom red col-sm-12 col-md-6">
+                    <p>Nossa senhora da coisas impossíveis que procuramos em vão<br>Vem, soliníssima,<br>Soleníssima e cheia de uma vontade oculta de soluçar</p>
+                </div>
+                <div class="rowbuttom green col-sm-12 col-md-6">
+                     <p>Nossa senhora da coisas impossíveis que procuramos em vão<br>Vem, soliníssima,<br>Soleníssima e cheia de uma vontade oculta de soluçar</p>
+                    <p>asdasdasdasd</p>
+                </div>
+                <div class="rowbuttom blue col-sm-12 col-md-6"></div>
+                <div class="rowbuttom pink col-sm-12 col-md-6">
+                    <a href="https://thispersondoesnotexist.com/" target="_blank">
+                        <img class="img-perfil" src="img/image1.jpeg" title="Sr. Prado" alt="Sr. Prado">
+                    </a>
+                        <p>Ótimo site para fazer negócios, recomento demais!</p>
+                </div>
+            </div>
+        </div>
+        <script src="../js/bootstrap.min.js"></script>
+        <script src="../js/jquery.js"></script>
+    </body>
 </html>
