@@ -1,14 +1,17 @@
 <?php
-	namespace App\Controllers;
 
-	class IndexController() {
-		public function index() {
-			echo "Chegados ao index controller index";
-		}
-		public function sobreNos(){
-			echo "Chegados ao index controller sobrenos";
-		}
+namespace App\Controllers;
+
+class IndexController {
+
+	public function index() {
+		echo 'Chegamos ao IndexController e disparamentos a action index';
 	}
+
+	public function sobreNos() {
+		echo 'Chegamos ao IndexController e disparamentos a action sobreNos';
+	}
+}
 
 
 ?>
