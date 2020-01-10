@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class Produto {
+class Info {
 
 	protected $db;
 
@@ -10,9 +10,9 @@ class Produto {
 		$this->db = $db;
 	}
 
-	public function getProdutos() {
+	public function getInfo() {
 		
-		$query = "select id, descricao, preco from tb_produtos";
+		$query = "select titulo, descricao from tb_info";
 		return $this->db->query($query)->fetchAll();
 	}
 }
