@@ -76,6 +76,89 @@ class Usuario extends Model {
 
 		return $this;
 	}
+
+	public function getAll(){
+		$query = "
+			select 
+				u.id, 
+				u.nome, 
+				u.email,
+				(
+					select
+						count(*)
+					from
+						usuario_seguidores as us
+					where
+						us.id_usuario = :id_usuario and us.id_usuario_seguindo = u.id
+				) as seguindo_sn
+			from 
+				usuarios as u
+			where 
+				u.nome like :nome and u.id != :id_usuario
+			";
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':nome', '%'.$this->nome.'%');
+		$stmt->bindValue(':id_usuario', $this->id);
+		$stmt->execute();
+
+		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+	}
+
+	public function seguirUsuario($id_usuario_seguindo){
+		$query = "insert into usuario_seguidores(id_usuario, id_usuario_seguindo)values(:id_usuario, :id_usuario_seguindo)";
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':id_usuario', $this->id);
+		$stmt->bindValue(':id_usuario_seguindo', $id_usuario_seguindo);
+		$stmt->execute();
+
+		return true;
+	}
+
+	public function deixarSeguirUsuario($id_usuario_seguindo){
+		$query = "delete from usuario_seguidores where id_usuario = :id_usuario and id_usuario_seguindo = :id_usuario_seguindo";
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':id_usuario', $this->id);
+		$stmt->bindValue(':id_usuario_seguindo', $id_usuario_seguindo);
+		$stmt->execute();
+
+		return true;
+	}
+
+	public function getInfoUsuario(){
+		$query = "select nome from usuarios where id = :id_usuario";
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':id_usuario', $this->id);
+		$stmt->execute();
+
+		return $stmt->fetch(\PDO::FETCH_ASSOC);
+	}
+
+	public function getTotalTweets(){
+		$query = "select count(*) as total_tweet from tweets where id_usuario = :id_usuario";
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':id_usuario', $this->id);
+		$stmt->execute();
+
+		return $stmt->fetch(\PDO::FETCH_ASSOC);
+	}
+
+	public function getTotalSeguindo(){
+		$query = "select count(*) as total_seguindo from usuario_seguidores where id_usuario = :id_usuario";
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':id_usuario', $this->id);
+		$stmt->execute();
+
+		return $stmt->fetch(\PDO::FETCH_ASSOC);
+	}
+
+	public function getTotalSeguidores(){
+		$query = "select count(*) as total_seguidores from usuario_seguidores where id_usuario_seguindo = :id_usuario";
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':id_usuario', $this->id);
+		$stmt->execute();
+
+		return $stmt->fetch(\PDO::FETCH_ASSOC);
+	}
 }
 
 ?>
