@@ -1,26 +1,7 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-  <head>
-    <!-- Meta tags Obrigatórias -->
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-
-    <!-- Font Awesome -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" integrity="sha384-KA6wR/X5RY4zFAHpv/CnoG2UW1uogYfdnP67Uv7eULvTveboZJg0qUpmJZb5VqzN" crossorigin="anonymous">
-
-    <!-- Estilo customizado -->
-    <link rel="stylesheet" type="text/css" href="css/estilo.css">
-
-    <title>Imobiliaria Digital</title>
-    <link rel="icon" href="img/favicon.png">
-  </head>
   <body>
     <!-- Cabeçalho -->
     <header>
-      <nav class="navbar navbar-expand-sm navbar-light fixed-top navbar-transparente">
+      <nav class="navbar navbar-expand-sm navbar-light fixed-top bg-warning">
         <div class="container">
           <a href="index.html" class="navbar-brand">
             <i class="fab fa-accusoft fa-2x text-light"></i>
@@ -44,10 +25,10 @@
                 <a href="" class="nav-link">Preços</a>
               </li>
               <li class="nav-item">
-                <a href="" class="btn btn-outline-light ml-4 d-none d-sm-block">Entrar</a>
+                <a href="/login" class="btn btn-outline-light ml-4 d-none d-sm-block">Entrar</a>
               </li>
               <li class="nav-item">
-                <a href="" class="btn btn-outline-light d-sm-none">Entrar</a>
+                <a href="/login" class="btn btn-outline-light d-sm-none">Entrar</a>
               </li>
             </ul>
             
@@ -56,7 +37,7 @@
       </nav>
     </header>
 
-    <section style="padding-top: 69px; background: grey;">
+    <section style="padding-top: 66px; background: yellow;">
     <!-- Carousel -->
     <div id="carousel-controles" class="carousel slide bg-dark" data-ride="carousel">
 
@@ -70,7 +51,7 @@
         <!-- Inner -->
       <div class="carousel-inner" style="text-align: center;">
         <div class="carousel-item active">
-          <img src="../../img/carousel/imagem1.jpeg" class="img-fluid">
+          <img src="img/carousel/imagem1.jpeg" class="img-fluid">
           <div class="carousel-caption">
             <h3>Item 1</h3>
             <p>Lorem Ipsum</p>
@@ -78,11 +59,11 @@
         </div>
 
         <div class="carousel-item">
-          <img src="../img/carousel/imagem2.jpeg" class="img-fluid">
+          <img src="img/carousel/imagem2.jpeg" class="img-fluid">
         </div>
 
         <div class="carousel-item">
-          <img src="../img/carousel/imagem3.jpeg" class="img-fluid">
+          <img src="img/carousel/imagem3.jpeg" class="img-fluid">
         </div>
       </div>
 
@@ -97,69 +78,85 @@
 
     </div>
     </section>
-    <!-- Início de sessão Home
-    <section id="home">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-6 d-flex mt-5">
-            <div class="align-self-center">
-              <h1 class="display-4">O jeito certo de vender imóveis!</h1>
-              <p>Uma ferramenta online para facilitar e revolucionar o modo de vender imóveis.</p>
-              
-              <form class="mt-4 mb-4">
-                <div class="input-group input-group-lg">
-                  <input type="text" placeholder="Seu e-mail" class="form-control">
-                  <div class="input-group-append">
-                    <button type="button" class="btn btn-primary">Cadastre-se</button>
+
+    <!-- Início de sessão Cards-->
+      <div class="card-columns container">
+
+        <?php foreach ($this->view->imoveis as $key => $value) {?>
+
+          <div class="card border-primary">
+            <img class="card-img-top" src="https://source.unsplash.com/random/400x200">
+            <div class="card-body">
+              <h4 class="card-title"><?= $value['endereco'] ?></h4>
+              <h6 class="card-subtitle"><?= $value['bairro'] ?></h6>
+              <h6>R$ <?= $value['valor'] ?></h6>
+
+              <div class="row" style="padding-top: 1em">
+                <div class="col">
+                  <div class="row d-flex justify-content-center">
+                    <i class="fas fa-2x fa-vector-square"></i>
+                  </div>
+                  <div class="row d-flex justify-content-center">
+                    <?= $value['area_util'] ?>m²
                   </div>
                 </div>
-              </form>
 
-              <p>Diponível para: 
-                <a href="" class="btn btn-outline-light">
-                  <i class="fab fa-android fa-lg"></i>
-                </a>
-                <a href="" class="btn btn-outline-light">
-                  <i class="fab fa-apple fa-lg"></i>
-                </a>
-              </p>
+                <div class="col">
+                  <div class="row d-flex justify-content-center">
+                    <i class="fas fa-2x fa-bath"></i>
+                  </div>
+                  <div class="row d-flex justify-content-center">
+                    <?= $value['banheiros'] ?> Banheiro(s)
+                  </div>                
+                </div>
 
+                <div class="col">
+                  <div class="row d-flex justify-content-center">
+                    <i class="fas fa-2x fa-bed"></i>
+                  </div>
+                  <div class="row d-flex justify-content-center">
+                    <?= $value['quartos'] ?> Quarto(s)
+                  </div>  
+                </div>
+              </div>
+              <div class="d-flex justify-content-end" style="padding-top: 1em">
+                <a href="" class="btn btn-outline-primary">Mais informações</a>
+              </div>
             </div>
           </div>
-          <div class="col-md-6 d-none d-md-block">
-            <img src="img/capa-mulher.png">
-          </div>
+        <?php } ?>
         </div>
-      </div>
-    </section>-->
+
+
+
 
     <!-- Início de sessão Dr. Sales-->
     <section class="caixa">
       <div class="container">
         <div class="row">
-          <div class="col-md-6 d-flex">
+          <div class="col-md-6 d-flex justify-content-center">
             <div class="align-self-center">
               <h2>Dr. Alisson Sales</h2>
               <p>Otimo sistema para vender imóveis!</p>
             </div>
           </div>
-          <div class="col-md-6">
-            <img src="../../img/saiba.png" class="img-fluid">
+          <div class="col-md-6 d-flex justify-content-center">
+            <img src="img/alisson_sales.jpeg" class="rounded-circle w-25">
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Início de sessão Sr. Jose-->
+    <!-- Início de sessão Sra. Miranda Teles-->
     <section class="caixa">
       <div class="container">
         <div class="row">
-          <div class="col-md-6">
-            <img src="../img/saiba.png" class="img-fluid">
+          <div class="col-md-6 d-flex justify-content-center">
+            <img src="img/miranda_teles.jpeg" class="rounded-circle w-25">
           </div>
-          <div class="col-md-6 d-flex">
+          <div class="col-md-6 d-flex justify-content-center">
             <div class="align-self-center">
-              <h2>Sr. José</h2>
+              <h2>Sra. Miranda Teles</h2>
               <p>Otimo sistema para vender imóveis!</p>
             </div>
           </div>
@@ -167,18 +164,18 @@
       </div>
     </section>
 
-    <!-- Início de sessão Dr. Martha-->
+    <!-- Início de sessão Dr. Ruth Silva-->
     <section class="caixa">
       <div class="container">
         <div class="row">
-          <div class="col-md-6 d-flex">
+          <div class="col-md-6 d-flex justify-content-center">
             <div class="align-self-center">
-              <h2>Dr. Martha</h2>
+              <h2>Dr. Ruth Silva</h2>
               <p>Otimo sistema para vender imóveis!</p>
             </div>
           </div>
-          <div class="col-md-6">
-            <img src="../img/saiba.png" class="img-fluid">
+          <div class="col-md-6 d-flex  justify-content-center">
+            <img src="img/ruth_silva.jpeg" class="rounded-circle w-25">
           </div>
         </div>
       </div>
@@ -189,16 +186,28 @@
       <div class="container">
         <div class="row">
           <div class="col-md-4">
-            <img src="../img/facil.png" class="img-fluid">
-            <h2>Fácil de usar</h2>
+            <div class="d-flex justify-content-center">
+              <img src="img/facil.png" class="w-75 p-3 align-self-center">
+            </div>
+            <div class="d-flex  justify-content-center">
+              <h2>Fácil de usar</h2>
+            </div>
           </div>
           <div class="col-md-4">
-            <img src="../img/economize.png" class="img-fluid">
-            <h2>Economize seu tempo</h2>
+            <div class="d-flex justify-content-center">
+              <img src="img/economize.png" class="w-75 p-3 align-self-center">
+            </div>
+            <div class="d-flex justify-content-center">
+              <h2>Economize seu tempo</h2>
+            </div>
           </div>
           <div class="col-md-4">
-            <img src="../img/suporte.png" class="img-fluid">
-            <h2>Suporte amigo</h2>
+            <div class="d-flex justify-content-center">
+              <img src="img/suporte.png" class="w-75 p-3 align-self-center">
+            </div>
+            <div class="d-flex justify-content-center">
+              <h2>Suporte amigo</h2>
+            </div>
           </div>
         </div>
       </div>
@@ -216,24 +225,16 @@
             </p>
           </div>
           <div class="col-md-4 d-flex justify-content-end">
-            <a href="" class="text-primary fa-2x ml-2">
+            <a href="" class="btn btn-outline-dark ml-2">
               <i class="fab fa-facebook"></i>
             </a>
             <a href="" class="btn btn-outline-dark ml-2">
               <i class="fab fa-twitter"></i>
             </a>
-            <a href="" class="text-danger fa-2x ml-2">
+            <a href="" class="btn btn-outline-dark ml-2">
               <i class="fab fa-youtube"></i>
             </a>
           </div>
         </div>
       </div>
     </footer>
-
-    <!-- JavaScript (Opcional) -->
-    <!-- jQuery primeiro, depois Popper.js, depois Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
-  </body>
-</html>
