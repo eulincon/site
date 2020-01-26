@@ -89,8 +89,12 @@ class AdmController extends Action{
 
 
 		if($acao == 'remover_corretor'){
-			$usuario->removerCorretor();
-			header('Location: /gerenciar_corretores');
+			$qtdImovel = $usuario->removerCorretor();
+			if($qtdImovel == 0){
+				header('Location: /gerenciar_corretores');
+			}else{
+				header('Location: /gerenciar_corretores?erro=true&qtd='.$qtdImovel.'&id_c='.$usuario->id);
+			}
 		}elseif($acao == 'adicionar_corretor'){
 			$usuario->adicionarCorretor();
 			header('Location: /gerenciar_corretores');
@@ -100,6 +104,10 @@ class AdmController extends Action{
 	public function gerenciar_corretores(){
 		$usuarios = Container::getModel('Usuario');
 		$usuarios = $usuarios->getAll();
+
+		$this->view->erro = isset($_GET['erro']) ? $_GET['erro'] : '';
+		$this->view->qtdImoveis = isset($_GET['qtd']) ? $_GET['qtd'] : '';
+		$this->view->id_c = isset($_GET['id_c']) ? $_GET['id_c'] : '';
 
 		$this->view->usuarios = $usuarios;
 

@@ -27,9 +27,16 @@
     
   </tbody>
 </table>
+  <?php foreach ($this->view->usuarios as $indice_arr => $usuario) {
+        if($this->view->erro == 'true' && $this->view->id_c == $usuario['id']){?>
+  <small class="text-danger">
+    *Impossível excluir <?= $usuario['nome']?> como Corretor, este possui <?= $this->view->qtdImoveis ?> imoveis para avaliar.<br>
+    *Para remover privilégios de Corretor, retire as avaliações de imoveis relacionadas a este usuário na seção "Imoveis Pedêntes".
+  </small>
+  <?php }} ?>
 </section>
 
-<!-- Tabela Corretores-->
+<!-- Tabela Usuarios-->
 <section class="container jumbotron">
 <h3 class="text-center">Usuarios comuns</h3>
 <?php $this->view->n = 1 ?>

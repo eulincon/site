@@ -16,12 +16,7 @@ class Usuario extends Model {
 	private $vendedor;
 	private $administrador;
 	private $corretor;
-
-
-	//validar se um cadastro pode ser feito
-
-	//recuperar um usuario por email
-
+	
 	public function __get($attr){
 		return $this->$attr;
 	}
@@ -162,16 +157,30 @@ class Usuario extends Model {
 	}
 
 	public function removerCorretor(){
-		$query = "update tb_usuarios set corretor = 0 where id = :id_usuario";
+		$query = "select count(*) from tb_imoveis where corretor_responsavel = :id_usuario";
 		$stmt = $this->db->prepare($query);
 		$stmt->bindValue(':id_usuario', $this->id);
 
 		if(!$stmt->execute()){
-			echo "<br><br><br><br><br>";
 			print_r($stmt->errorInfo());
+		}else{
+			$qtdImovel = $stmt->fetch(\PDO::FETCH_ASSOC);
 		}
 
-		return true;
+		//echo $qtdImovel['count(*)']; 
+		if($qtdImovel['count(*)'] == 0){
+			$query = "update tb_usuarios set corretor = 0 where id = :id_usuario";
+			$stmt = $this->db->prepare($query);
+			$stmt->bindValue(':id_usuario', $this->id);
+
+			if(!$stmt->execute()){
+				echo "<br><br><br><br><br>";
+				print_r($stmt->errorInfo());
+			}
+				return $qtdImovel['count(*)'];
+		}else{
+			return $qtdImovel['count(*)'];
+		}
 	}
 
 	public function adicionarCorretor(){

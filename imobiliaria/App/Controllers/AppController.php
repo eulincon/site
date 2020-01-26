@@ -15,7 +15,7 @@ class AppController extends Action{
 		$this->view->login = isset($_GET['login']) ? $_GET['login'] : '';
 
 		$imovel = Container::getModel('Imovel');
-		$imoveis = $imovel->getAll();
+		$imoveis = $imovel->getImoveisMostrarNaIndex();
 
 		$this->view->imoveis = $imoveis;
 
@@ -81,10 +81,13 @@ class AppController extends Action{
 		
 		print_r($_FILES);
 
-		//$imovel->salvar();
+		if($imovel->salvar()){
+			header('Location: /timeline');
+		}else{
+			$this->view->erroCadastro = true;
+			$this->render('cadastrar_imovel');
+		}
 
-		//$this->view->erroCadastro = true;
-		$this->render('cadastrar_imovel');
 
 	}
 
@@ -92,6 +95,33 @@ class AppController extends Action{
 		$this->view->erroCadastro = false;
 		$this->render('cadastrar_imovel');
 	}
+
+	public function cadastrar_proprietario(){
+		$this->view->erroCadastro = false;
+		$this->render('cadastrar_proprietario','layout_app');
+	}
+
+	public function registrarProprietario(){
+		$proprietario = Container::getModel('Proprietario');
+		$proprietario->fk_id_usuario = 1;
+		$proprietario->endereco = $_POST['endereco'];
+		$proprietario->numero = $_POST['numero'];
+		$proprietario->bairro = $_POST['bairro'];
+		$proprietario->cep = $_POST['cep'];
+		$proprietario->cpf = $_POST['cpf'];
+		$proprietario->cnpj = $_POST['cnpj'];
+
+		$proprietario->salvar();
+
+		header('Location: /cadastrar_imovel');
+	}
+
+	public function imovel_detalhes(){
+
+		$imovel = Container::getModel('Imovel');
+		$imovel = $imovel->getImovelPorId($_GET['imovel']);
+		$this->view->imovel = $imovel;
+		$this->render('imovel_detalhes','layout_app');
+	}
 	
 }
-

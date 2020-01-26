@@ -109,10 +109,11 @@ class Imovel extends Model {
 			echo "<pre>";
 			print_r($stmt->errorInfo());
 			echo "</pre>";
+			return false;
 		}
 		
 
-		return $this;
+		return true;
 	}
 
 	public function getAll(){
@@ -227,9 +228,9 @@ class Imovel extends Model {
 		if(!$stmt->execute()){
 			echo "<br><br><br><br><br>";
 			print_r($stmt->errorInfo());
+			return true;
 		}
 
-		return $this;
 	}
 
 	public function validarImovel(){

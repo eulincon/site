@@ -135,7 +135,23 @@ class Route extends Bootstrap {
 			'action' => 'gerenciar_corretores'
 		);
 
+		$routes['cadastrar_proprietario'] = array(
+			'route' => '/cadastrar_proprietario',
+			'controller' => 'AppController',
+			'action' => 'cadastrar_proprietario'
+		);
 
+		$routes['registrarProprietario'] = array(
+			'route' => '/registrarProprietario',
+			'controller' => 'AppController',
+			'action' => 'registrarProprietario'
+		);
+
+		$routes['imovel_detalhes'] = array(
+			'route' => '/imovel_detalhes',
+			'controller' => 'AppController',
+			'action' => 'imovel_detalhes'
+		);
 
 		$this->setRoutes($routes);
 	}

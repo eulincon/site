@@ -1,0 +1,68 @@
+<div class="jumbotron container">
+  <div class="d-flex justify-content-center mt-5">
+    <div class="card" style="width: 90rem;">
+      <div class="card-body" style="padding: 3em">
+
+        <div class="row">
+          <div class="col">
+            <h2 class="text-center mb-5">Informações sobre proprietário</h2>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+
+            <form action="/registrarProprietario" method="post">
+
+              <div class="form-group row">
+                <label class="col-lg-3 text-right" for="cep">CEP</label>
+                  <input id="cep" name="cep" class="form-control col-lg-9" placeholder="______-__">
+              </div>
+
+              <div class="form-group row">
+                <label class="col-lg-3 text-right" for="cidade">Cidade</label>
+                  <input name="cidade" class="form-control col-lg-9" id="cidade">
+              </div>
+              
+              <div class="form-group row">
+                <label class="col-lg-3 text-right">Endereço</label>
+                  <input name="endereco" class="form-control col-lg-9" placeholder="Ex.: Rua Mont Alverne">
+              </div>
+
+              <div class="form-group row">
+                  <label class="col-lg-3 text-right" id="numero">Número</label>
+                    <input name="numero" class="form-control col-lg-3" id="numero" placeholder="1234">
+
+                  <label class="col-lg-2 text-right" for="bairro">Bairro</label>
+                    <input name="bairro" class="form-control col-lg-4" id="bairro">
+              </div>
+
+
+            </div>
+
+            <div class="col">
+
+              <div class="form-group row">
+                <label class="col-lg-3 text-right" for="cep">CPF</label>
+                  <input id="cep" name="cpf" class="form-control col-lg-9" placeholder="000.000.000-00">
+              </div>
+
+              <div class="form-group row">
+                <label class="col-lg-3 text-right" for="cidade">CNPJ</label>
+                  <input name="cnpj" class="form-control col-lg-9" id="cidade" placeholder="00.000.000/000-00">
+              </div>
+            </div>
+              
+              <button type="submit" class="btn btn-warning btn-block mt-5">Salvar Proprietario</button>
+              <?php if($this->view->erroCadastro) { ?>
+                <small class="form-text text-danger">*Erro ao tentar realizar o cadastro, verifique se os campos foram preenchidos corretamente</small>
+              <?php } ?>
+            </form>
+
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
