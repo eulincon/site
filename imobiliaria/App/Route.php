@@ -39,9 +39,15 @@ class Route extends Bootstrap {
 			'action' => 'autenticar'
 		);
 
+		$routes['dashboard'] = array(
+			'route' => '/dashboard',
+			'controller' => 'AdmController',
+			'action' => 'dashboard'
+		);
+
 		$routes['timeline'] = array(
 			'route' => '/timeline',
-			'controller' => 'AdmController',
+			'controller' => 'AppController',
 			'action' => 'timeline'
 		);
 
@@ -51,10 +57,10 @@ class Route extends Bootstrap {
 			'action' => 'sair'
 		);
 
-		$routes['cadastrarImovel'] = array(
-			'route' => '/cadastrarImovel',
+		$routes['cadastrar_imovel'] = array(
+			'route' => '/cadastrar_imovel',
 			'controller' => 'AppController',
-			'action' => 'cadastrarImovel'
+			'action' => 'cadastrar_imovel'
 		);
 
 		$routes['imagem'] = array(
@@ -74,6 +80,61 @@ class Route extends Bootstrap {
 			'controller' => 'IndexController',
 			'action' => 'ver_imagem'
 		);
+
+		$routes['modulo'] = array(
+			'route' => '/modulo',
+			'controller' => 'IndexController',
+			'action' => 'modulo'
+		);
+
+		$routes['dashboardC'] = array(
+			'route' => '/dashboardC',
+			'controller' => 'CorController',
+			'action' => 'dashboardC'
+		);
+
+		$routes['registrarImovel'] = array(
+			'route' => '/registrarImovel',
+			'controller' => 'AppController',
+			'action' => 'registrarImovel'
+		);
+
+		$routes['error_notfound'] = array(
+			'route' => '/error_notfound',
+			'controller' => 'IndexController',
+			'action' => 'error_notfound'
+		);
+
+		$routes['imoveis_pendentes'] = array(
+			'route' => '/imoveis_pendentes',
+			'controller' => 'AdmController',
+			'action' => 'imoveis_pendentes'
+		);
+
+		$routes['imoveis_avaliacao'] = array(
+			'route' => '/imovel_avaliacao',
+			'controller' => 'AdmController',
+			'action' => 'imovel_avaliacao'
+		);
+
+		$routes['acao_imovel'] = array(
+			'route' => '/acao_imovel',
+			'controller' => 'AdmController',
+			'action' => 'acao_imovel'
+		);
+
+		$routes['acao_usuario'] = array(
+			'route' => '/acao_usuario',
+			'controller' => 'AdmController',
+			'action' => 'acao_usuario'
+		);
+
+		$routes['gerenciar_corretores'] = array(
+			'route' => '/gerenciar_corretores',
+			'controller' => 'AdmController',
+			'action' => 'gerenciar_corretores'
+		);
+
 
 
 		$this->setRoutes($routes);

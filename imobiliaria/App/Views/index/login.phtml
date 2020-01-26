@@ -1,13 +1,10 @@
 <div class="container">
-  <div class="d-flex justify-content-center mt-5">
+  <div class="d-flex justify-content-center" style="padding: 7em">
     <div class="card" style="width: 36rem;">
-        <div class="card-img-top d-flex justify-content-center">
-          <img src="https://source.unsplash.com/random/400x200"/>
-        </div>
       <div class="card-body">
 
 
-        <div class="row">
+        <div class="row" style="padding-bottom: 3em">
           <div class="col">
             <h2 class="text-center">Login</h2>
           </div>
@@ -25,15 +22,13 @@
               <div class="form-group">
                 <input type="password" value="<?= $this->view->usuario['senha'] ?>"name="senha" class="form-control" placeholder="Senha">
               </div>
-              
-              <div class="mt-4 mb-4">
-                <small class="form-text">
-                  Ao inscrever-se, você concorda com os Termos de Serviço e com as Políticas de Privacidade, incluindo o Uso de Cookies. Outras pessoas poderão encontrar você pelo e-mail ou número de telefone fornecido · Opções de Privacidade
-                </small>
-              </div>
               <button type="submit" class="btn btn-warning btn-block">Aceder</button>
-              <?php if($this->view->erroCadastro) { ?>
-                <small class="form-text text-danger">*Erro ao tentar realizar o cadastro, verifique se os campos foram preenchidos corretamente</small>
+              <?php if($this->view->login == 'erro') {?>
+              <div class="row">
+                <div class="col">
+                  <span class="text text-danger">*E-mail e ou senha inválido(s)</span>
+                </div>
+              </div>
               <?php } ?>
             </form>
 

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 	<html>
 	<head>
-		<title>Miniframework</title>
+		<title>Corretor</title>
 		<meta charset="utf-8">
 
 		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
@@ -16,16 +16,13 @@
 
 		<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
 
-		<link rel="stylesheet" type="text/css" href="/css/styloo.css">
+		<link rel="stylesheet" type="text/css" href="/css/estilo.css">
 	</head>
 	<body>
-		<h1>Layout 2</h1>
-
-		<!-- Cabeçalho -->
-	    <header>
+		<header>
 	      <nav class="navbar navbar-expand-sm navbar-light fixed-top bg-success">
 	        <div class="container">
-	          <a href="/" class="navbar-brand">
+	          <a href="/dashboardC" class="navbar-brand">
 	            <i class="fab fa-accusoft fa-2x text-light"></i>
 	          </a>
 	          <button class="navbar-toggler" data-toggle="collapse" data-target="#nav-principal">
@@ -37,22 +34,30 @@
 	              <li class="nav-item">
 	                <a href="" class="nav-link">Home</a>
 	              </li>
+	              <li class="nav-item dropdown">
+			        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+			          Modulo
+			        </a>
+			        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+			          <a class="dropdown-item" href="#">Comprador/Vendedor</a>
+			          <a class="dropdown-item" href="#">Corretor</a>
+			      </li>
 	              <li class="nav-item">
-	                <a href="" class="nav-link">Recusos</a>
+	                <a href="" class="nav-link">Editar perfil</a>
 	              </li>
 	              <li class="nav-item">
-	                <a href="" class="nav-link">Beneficios</a>
-	              </li>
 	              <li class="nav-item">
-	                <a href="" class="nav-link">Preços</a>
-	              </li>
-	              <li class="nav-item">
-	                <a href="" class="btn btn-outline-light ml-4 d-none d-sm-block">Entrar</a>
-	              </li>
-	              <li class="nav-item">
-	                <a href="" class="btn btn-outline-light d-sm-none">Entrar</a>
+	                <a href="" class="nav-link">Sair</a>
 	              </li>
 	            </ul>
+	            
+	            <span class="navbar-text ml-2">
+				  | Olá Sra. Miranda! 
+				</span>
+              	<div class="media align-self-center">
+				  <img class="mr-3 ml-2 rounded-circle" style="widows: 50px; height: 50px" src="img/miranda_teles.jpeg">
+				</div>
+                <a href="" class="btn btn-outline-light d-sm-none">Entrar</a>
 	            
 	          </div>
 	        </div>
@@ -66,10 +71,10 @@
 	        <div class="row">
 	          <div class="col-md-8">
 	            <p>
-	              <a href="">Home</a>
-	              <a href="">Recursos</a>
-	              <a href="">Beneficios</a>
-	              <a href="">Preços</a>
+	              <a href="/">Home</a>
+	              <a href="/error_notfound">Recursos</a>
+	              <a href="/error_notfound">Beneficios</a>
+	              <a href="/error_notfound">Preços</a>
 	            </p>
 	          </div>
 	          <div class="col-md-4 d-flex justify-content-end">

@@ -19,28 +19,31 @@ class Imagem extends Model {
 	}
 
 	public function salvar(){
-		$fp = fopen($this->imagem['tmp_name'], "rb");
-		//header("Content-type: image/gif");
-		$conteudo = fread($fp, $this->imagem['size']);
-		$conteudo = addslashes($conteudo);
-		fclose($fp);
-		
-		$query = "insert into tb_imagens (imagen) values (:imagem)";
+		//echo $this->imagem['name'];
+		$nomeImagem = time().$this->imagem['name'];
+		$ultimoId = $this->db->lastInsertId();
+		$diretorio = "img/usuarios/".$ultimoId."/";
+		mkdir($diretorio, 0755);
+		$query = "insert into tb_imagens (imagem) values (:imagem)";
 		$stmt = $this->db->prepare($query);
-		$stmt->bindValue(':imagem', $conteudo);
-		$stmt->execute();
+		$stmt->bindValue(':imagem', $diretorio.$nomeImagem);
+		
+		if($stmt->execute()){
+			move_uploaded_file($this->imagem['tmp_name'], $diretorio.$nomeImagem);
+		}else{
+			echo "Error";
+		}
+
 		return $this;
 	}
 
 	public function retornarImagem(){
 
-		$query = "SELECT imagen from tb_imagens WHERE id = 3";
+		$query = "SELECT imagem from tb_imagens WHERE id = 23";
 		$stmt = $this->db->prepare($query);
-		$stmt->exercute();
+		$stmt->execute();
 
-		print_r($stmt);
-
-		//return $stmt->fetch(\PDO::FETCH_ASSOC);
+		return $stmt->fetch(\PDO::FETCH_ASSOC);
 
 	}
 

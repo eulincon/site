@@ -49,51 +49,35 @@
           <div class="card border-primary">
             <img class="card-img-top" src="https://source.unsplash.com/random/400x200">
             <div class="card-body">
-              <div>
-              <h5 class="card-title"><?= $value['tipo'] ?></h5>
-              </div>
-              <div>
-              <h6 class="card-subtitle"><?= $value['endereco'] ?></h6>
-              </div>
-              <div>
+              <h4 class="card-title"><?= $value['endereco'] ?></h4>
+              <h6 class="card-subtitle"><?= $value['bairro'] ?></h6>
               <h6>R$ <?= $value['valor'] ?></h6>
-              </div>
 
               <div class="row" style="padding-top: 1em">
-                <div class="col">
-                  <div class="row d-flex justify-content-center">
-                    <i class="fas fa-2x fa-bath"></i>
-                  </div>
-                  <div class="row d-flex justify-content-center">
-                    <small>
-                    <?= $value['banheiros'] ?> Banheiro(s)
-                    </small>
-                  </div>                
-                </div>
-
-
-                <?php if($value['area_util'] > 0){ ?>
                 <div class="col">
                   <div class="row d-flex justify-content-center">
                     <i class="fas fa-2x fa-vector-square"></i>
                   </div>
                   <div class="row d-flex justify-content-center">
-                    <small>
                     <?= $value['area_util'] ?>m²
-                    </small>
                   </div>
                 </div>
-                <?php } ?>
 
+                <div class="col">
+                  <div class="row d-flex justify-content-center">
+                    <i class="fas fa-2x fa-bath"></i>
+                  </div>
+                  <div class="row d-flex justify-content-center">
+                    <?= $value['banheiros'] ?> Banheiro(s)
+                  </div>                
+                </div>
 
                 <div class="col">
                   <div class="row d-flex justify-content-center">
                     <i class="fas fa-2x fa-bed"></i>
                   </div>
                   <div class="row d-flex justify-content-center">
-                    <small>
                     <?= $value['quartos'] ?> Quarto(s)
-                    </small>
                   </div>  
                 </div>
               </div>

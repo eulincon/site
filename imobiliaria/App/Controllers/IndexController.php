@@ -12,10 +12,10 @@ class IndexController extends Action {
 		$this->view->login = isset($_GET['login']) ? $_GET['login'] : '';
 
 		$imovel = Container::getModel('Imovel');
-		$imoveis = $imovel->getAll();
+		$imoveis = $imovel->getImoveisMostrarNaIndex();
 
 		$this->view->imoveis = $imoveis;
-
+		
 		$this->render('index');
 	}
 
@@ -26,6 +26,7 @@ class IndexController extends Action {
 			'senha' => ''
 		);
 		$this->view->erroCadastro = false;
+		$this->view->login = isset($_GET['login']) ? $_GET['login'] : '';
 		$this->render('login');
 	}
 
@@ -46,6 +47,9 @@ class IndexController extends Action {
 		//receber os dados do formulario
 		$usuario = Container::getModel('Usuario');
 
+		if(file_exists($_FILES['imagem_perfil']['tmp_name'])){
+			$usuario->imagem_perfil = $_FILES['imagem_perfil'];
+		}
 		$usuario->__set('nome', $_POST['nome']);
 		$usuario->__set('telefone', $_POST['telefone']);
 		$usuario->__set('email', $_POST['email']);
@@ -55,7 +59,7 @@ class IndexController extends Action {
 	
 			$usuario->salvar();
 
-			$this->render('cadastro');
+			//$this->render('cadastro');
 
 		}else{
 			$this->view->usuario = array(
@@ -67,6 +71,10 @@ class IndexController extends Action {
 			$this->view->erroCadastro = true;
 			$this->render('inscreverse');
 		}
+	}
+
+	public function error_notfound(){
+		$this->render('error_notfound','layout_error');
 	}
 
 	public function imagem(){
@@ -81,18 +89,21 @@ class IndexController extends Action {
 
 		$imagem->salvar();
 
-		$imagem->retornarImagem();
+		//$imagem->retornarImagem();
 
-		//$this->render('ver_imagem');
+		$this->render('ver_imagem');
 	}
 
-	//public function ver_imagem(){
+	public function ver_imagem(){
+		$imagem = Container::getModel('Imagem');
+		$img = $imagem->retornarImagem();
+		$this->view->imagem = $img;
+		$this->render('ver_imagem');
+	}
 
-	//	Header( "Content-type: image/gif");
-	//	echo $imagem->retornarImagem();
-		//$this->view->imagem = $imagem;
-		//$this->render('ver_imagem');
-	//}
+	public function modulo(){
+		$this->render('modulo');
+	}
 
 
 }

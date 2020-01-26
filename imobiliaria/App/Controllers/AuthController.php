@@ -20,14 +20,27 @@ class AuthController extends Action{
 		if($usuario->__get('id') != '' && $usuario->__get('nome') != ''){
 
 			session_start();
-
 			$_SESSION['id'] = $usuario->__get('id');
 			$_SESSION['nome'] = $usuario->__get('nome');
 
-			header('Location: /timeline');
+			echo "<br><br><br><br><br><br>";
+			echo $usuario->administrador."asdsad";
+			echo $usuario->comprador."asdsad";
+			echo $usuario->corretor."asdsad";
+
+			if($usuario->__get('administrador')){
+				header('Location: /dashboard');
+			}elseif($usuario->__get('comprador') && $usuario->__get('corretor')){
+				header("Location: /modulo");
+			}elseif($usuario->__get('comprador')){
+				header("Location: /timeline");
+			}elseif($usuario->__get('corretor')){
+				header("Location: /dashboardC");
+			}
+
 		}else{
 			
-			header('Location: /?login=erro');
+			header('Location: /login?login=erro');
 		}
 	}
 

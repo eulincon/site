@@ -1,0 +1,64 @@
+<!-- Tabela Corretores-->
+<section class="container jumbotron" style="margin-top: 5em">
+<h3 class="text-center">Corretores</h3>
+<?php $this->view->n = 1 ?>
+<table class="table table-striped table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome</th>
+      <th scope="col">E-mail</th>
+      <th scope="col">Responsável</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php foreach ($this->view->usuarios as $indice_arr => $usuario) { ?>
+      <?php if($usuario['corretor'] == 1){ ?>
+      <tr>
+        <th scope="row"><?= $this->view->n++ ?></th>
+        <td><?= $usuario['nome'] ?></td>
+        <td><?= $usuario['email'] ?></td>
+        <td>
+          <a class="btn btn-danger" href="/acao_usuario?acao=remover_corretor&id_c=<?= $usuario['id'] ?>" role="button">Desmarcar como corretor</a>
+        </td>
+      </tr>
+      <?php } ?>
+    <?php } ?>
+    
+  </tbody>
+</table>
+</section>
+
+<!-- Tabela Corretores-->
+<section class="container jumbotron">
+<h3 class="text-center">Usuarios comuns</h3>
+<?php $this->view->n = 1 ?>
+<table class="table table-striped table-bordered">
+  <thead class="thead-dark">
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Nome</th>
+      <th scope="col">E-mail</th>
+      <th scope="col">Responsável</th>
+    </tr>
+  </thead>
+  <tbody>
+    <?php foreach ($this->view->usuarios as $indice_arr => $usuario) { ?>
+      <?php if($usuario['corretor'] == 0 && $usuario['administrador'] == 0){ ?>
+      <tr>
+        <th scope="row"><?= $this->view->n++ ?></th>
+        <td><?= $usuario['nome'] ?></td>
+        <td><?= $usuario['email'] ?></td>
+        <td>
+          <a class="btn btn-success" href="/acao_usuario?acao=adicionar_corretor&id_c=<?= $usuario['id'] ?>" role="button">Marcar como corretor</a>
+        </td>
+      </tr>
+      <?php } ?>
+    <?php } ?>
+    
+  </tbody>
+</table>
+</section>
+
+
+

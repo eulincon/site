@@ -1,28 +1,40 @@
 <div class="container">
   <div class="d-flex justify-content-center mt-5">
-    <div class="card" style="width: 40rem;">
+    <div class="card" style="width: 40rem; margin-top: 3em">
       <div class="card-body">
 
-        <div class="d-flex justify-content-center">
-          <img src="https://source.unsplash.com/random/400x200"/>
-        </div>
+        
 
         <div class="row">
           <div class="col">
-            <h2 class="text-center">Crie sua conta</h2>
+            <h2 class="text-center mb-4">Crie sua conta</h2>
           </div>
         </div>
 
         <div class="row">
           <div class="col">
             
-            <form action="/registrar" method="post">
+            <form action="/registrar" method="post" encType="multipart/form-data">
+
+              <div class="form-group">
+
+                <div class="d-flex justify-content-center mt-2">
+                  <div class="media card col-lg-3" style="height: 10em">
+                    <img class="preview-img img-fluid">
+                  </div>
+                </div>
+
+                <div class="row d-flex justify-content-center">
+                  <input name="imagem_perfil" accept="image/*" class="file-chooser" type="file" class="form-control-file">
+                </div>
+              </div>
+
               <div class="form-group">
                 <input type="text" value="<?= $this->view->usuario['nome'] ?>" name="nome" class="form-control" placeholder="Nome">
               </div>
 
               <div class="form-group">
-                <input type="phone" value="<?= $this->view->usuario['telefone'] ?>" name="telefone" class="form-control" placeholder="Telefone">
+                <input type="text" value="<?= $this->view->usuario['telefone'] ?>" name="telefone" class="form-control" placeholder="(88) 99999-9999">
               </div>
               
               <div class="form-group">
@@ -43,6 +55,23 @@
                 <small class="form-text text-danger">*Erro ao tentar realizar o cadastro, verifique se os campos foram preenchidos corretamente</small>
               <?php } ?>
             </form>
+            <script>
+              const $ = document.querySelector.bind(document);
+              const previewImg = $('.preview-img');
+              const fileChooser = $('.file-chooser');
+              fileChooser.onchange = e => {
+                const fileToUpload = e.target.files.item(0);
+                const reader = new FileReader();
+
+                // evento disparado quando o reader terminar de ler 
+                reader.onload = e => previewImg.src = e.target.result;
+
+                // solicita ao reader que leia o arquivo 
+                // transformando-o para DataURL. 
+                // Isso disparará o evento reader.onload.
+                reader.readAsDataURL(fileToUpload);
+              };
+            </script>
 
             </div>
           </div>

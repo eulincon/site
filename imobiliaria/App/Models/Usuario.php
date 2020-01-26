@@ -6,10 +6,16 @@ use MF\Model\Model;
 
 class Usuario extends Model {
 	private $id;
+	private $imagem_perfil;
 	private $nome;
-	private $telefone;
 	private $email;
 	private $senha;
+	private $telefone;
+	private $status;
+	private $comprador;
+	private $vendedor;
+	private $administrador;
+	private $corretor;
 
 
 	//validar se um cadastro pode ser feito
@@ -26,15 +32,38 @@ class Usuario extends Model {
 
 	//salvar
 	public function salvar(){
-		$query = "insert into usuarios(nome, telefone, email, senha) values(:nome, :telefone, :email, :senha)";
+		$query = "insert into tb_usuarios(nome, telefone, email, senha) values(:nome, :telefone, :email, :senha)";
 		$stmt = $this->db->prepare($query);
 		$stmt->bindValue(':nome', $this->__get('nome'));
 		$stmt->bindValue(':telefone', $this->__get('telefone'));
 		$stmt->bindValue(':email', $this->__get('email'));
 		$stmt->bindValue(':senha', $this->__get('senha')); //metodo md5 para crisptografia
-		$stmt->execute();
+		if(!$stmt->execute()){
+			print_r($stmt->errorInfo());
+		}else{
+			echo "salvou usuario";
+		}
 
-		return $this;
+		if(isset($this->imagem_perfil)){
+			$id = $this->getIdPorEmail();
+			$this->id = $id['id'];
+			$nomeImagem = time().$this->imagem_perfil['name'];
+			$diretorio = "img/usuarios/".$this->id."/";
+			mkdir($diretorio, 0755);
+			$query = "update tb_usuarios set imagem_perfil = :imagem where id = :id";
+			$stmt = $this->db->prepare($query);
+			$stmt->bindValue(':imagem', $diretorio.$nomeImagem);
+			$stmt->bindValue(':id', $this->id);
+
+			if(!$stmt->execute()){
+				print_r($stmt->errorInfo());
+			}else{
+				move_uploaded_file($this->imagem_perfil['tmp_name'], $diretorio.$nomeImagem);
+				echo "salvou imaegem";
+			}
+		}
+
+		//return $this;
 	}
 
 	public function validarCadastro(){
@@ -57,7 +86,7 @@ class Usuario extends Model {
 	}
 
 	public function getUsuarioPorEmail(){
-		$query = "select nome, email from usuarios where email = :email";
+		$query = "select nome, email from tb_usuarios where email = :email";
 		$stmt = $this->db->prepare($query);
 		$stmt->bindValue(':email', $this->__get('email'));
 		$stmt->execute();
@@ -65,18 +94,51 @@ class Usuario extends Model {
 		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 	}
 
+	public function getIdPorEmail(){
+		$query = "select id from tb_usuarios where email = :email";
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':email', $this->email);
+		$stmt->execute();
+
+		return $stmt->fetch(\PDO::FETCH_ASSOC);
+	}
+
+	public function getCorretores(){
+		$query = "select id, nome, email from tb_usuarios where corretor = 1";
+		$stmt = $this->db->prepare($query);
+		$stmt->execute();
+
+		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+	}
+
 	public function autenticar(){
-		$query = "select id, nome, email from tb_usuarios where email = :email and senha =:senha";
+		$query = "select 
+					id, 
+					nome, 
+					email, 
+					comprador, 
+					vendedor, 
+					administrador, 
+					corretor 
+				from 
+					tb_usuarios 
+				where 
+					email = :email and senha =:senha";
 		$stmt = $this->db->prepare($query);
 		$stmt->bindValue(':email', $this->__get('email'));
 		$stmt->bindValue(':senha', $this->__get('senha'));
 		$stmt->execute();
 
-		$usuario = $stmt->fetch(\PDO::FETCH_ASSOC);
 
+		$usuario = $stmt->fetch(\PDO::FETCH_ASSOC);
+		
 		if($usuario['id'] != '' && $usuario['nome'] != ''){
 			$this->__set('id', $usuario['id']);
 			$this->__set('nome', $usuario['nome']);
+			$this->__set('comprador', $usuario['comprador']);
+			$this->__set('vendedor', $usuario['vendedor']);
+			$this->__set('administrador', $usuario['administrador']);
+			$this->__set('corretor', $usuario['corretor']);
 		}
 
 		return $this;
@@ -85,84 +147,44 @@ class Usuario extends Model {
 	public function getAll(){
 		$query = "
 			select 
-				u.id, 
-				u.nome, 
-				u.email,
-				(
-					select
-						count(*)
-					from
-						usuario_seguidores as us
-					where
-						us.id_usuario = :id_usuario and us.id_usuario_seguindo = u.id
-				) as seguindo_sn
+				*
 			from 
-				usuarios as u
-			where 
-				u.nome like :nome and u.id != :id_usuario
+				tb_usuarios
 			";
 		$stmt = $this->db->prepare($query);
-		$stmt->bindValue(':nome', '%'.$this->nome.'%');
-		$stmt->bindValue(':id_usuario', $this->id);
-		$stmt->execute();
+		
+		if(!$stmt->execute()){
+			echo "<br><br><br><br><br>";
+			print_r($stmt->errorInfo());
+		}
 
 		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 	}
 
-	public function seguirUsuario($id_usuario_seguindo){
-		$query = "insert into usuario_seguidores(id_usuario, id_usuario_seguindo)values(:id_usuario, :id_usuario_seguindo)";
+	public function removerCorretor(){
+		$query = "update tb_usuarios set corretor = 0 where id = :id_usuario";
 		$stmt = $this->db->prepare($query);
 		$stmt->bindValue(':id_usuario', $this->id);
-		$stmt->bindValue(':id_usuario_seguindo', $id_usuario_seguindo);
-		$stmt->execute();
+
+		if(!$stmt->execute()){
+			echo "<br><br><br><br><br>";
+			print_r($stmt->errorInfo());
+		}
 
 		return true;
 	}
 
-	public function deixarSeguirUsuario($id_usuario_seguindo){
-		$query = "delete from usuario_seguidores where id_usuario = :id_usuario and id_usuario_seguindo = :id_usuario_seguindo";
+	public function adicionarCorretor(){
+		$query = "update tb_usuarios set corretor = 1 where id = :id_usuario";
 		$stmt = $this->db->prepare($query);
 		$stmt->bindValue(':id_usuario', $this->id);
-		$stmt->bindValue(':id_usuario_seguindo', $id_usuario_seguindo);
-		$stmt->execute();
+
+		if(!$stmt->execute()){
+			echo "<br><br><br><br><br>";
+			print_r($stmt->errorInfo());
+		}
 
 		return true;
-	}
-
-	public function getInfoUsuario(){
-		$query = "select nome from usuarios where id = :id_usuario";
-		$stmt = $this->db->prepare($query);
-		$stmt->bindValue(':id_usuario', $this->id);
-		$stmt->execute();
-
-		return $stmt->fetch(\PDO::FETCH_ASSOC);
-	}
-
-	public function getTotalTweets(){
-		$query = "select count(*) as total_tweet from tweets where id_usuario = :id_usuario";
-		$stmt = $this->db->prepare($query);
-		$stmt->bindValue(':id_usuario', $this->id);
-		$stmt->execute();
-
-		return $stmt->fetch(\PDO::FETCH_ASSOC);
-	}
-
-	public function getTotalSeguindo(){
-		$query = "select count(*) as total_seguindo from usuario_seguidores where id_usuario = :id_usuario";
-		$stmt = $this->db->prepare($query);
-		$stmt->bindValue(':id_usuario', $this->id);
-		$stmt->execute();
-
-		return $stmt->fetch(\PDO::FETCH_ASSOC);
-	}
-
-	public function getTotalSeguidores(){
-		$query = "select count(*) as total_seguidores from usuario_seguidores where id_usuario_seguindo = :id_usuario";
-		$stmt = $this->db->prepare($query);
-		$stmt->bindValue(':id_usuario', $this->id);
-		$stmt->execute();
-
-		return $stmt->fetch(\PDO::FETCH_ASSOC);
 	}
 }
 
