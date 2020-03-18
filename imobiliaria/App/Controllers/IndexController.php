@@ -57,9 +57,9 @@ class IndexController extends Action {
 
 		if($usuario->validarCadastro() && count($usuario->getUsuarioPorEmail()) == 0){
 	
-			$usuario->salvar();
-
-			//$this->render('cadastro');
+			if($usuario->salvar()){
+				header('Location: /login');
+			}
 
 		}else{
 			$this->view->usuario = array(
@@ -101,10 +101,16 @@ class IndexController extends Action {
 		$this->render('ver_imagem');
 	}
 
-	public function modulo(){
-		$this->render('modulo');
-	}
+	public function imovel_detalhesNoUser(){
+		$imovel = Container::getModel('Imovel');
+		$imagens = $imovel->getImagensImovelPorId($_GET['imovel']);
+		$imovel = $imovel->getImovelPorId($_GET['imovel']);
 
+		$this->view->imovel = $imovel;
+		$this->view->imagens = $imagens;
+
+		$this->render('imovel_detalhesNoUser');
+	}
 
 }
 

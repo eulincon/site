@@ -1,0 +1,76 @@
+<section style="padding-top: 80px;" class="container">
+	<h3>Avaliar Imovel</h3>
+</section>
+
+<section>
+
+  <div class="container jumbotron" style="border-color: black">
+    <div>
+      <div class="row mb-5">
+        <div class="col-lg-6">
+          <h5>Proprietário: </h5>
+          <h5>Tipo do imóvel: <?= $this->view->imovel['tipo'] ?></h5>
+          <h5>Status: <?= $this->view->imovel['status'] ?></h5>
+        </div>
+        <div class="col-lg-6">
+          <h5>Endereço: <?= $this->view->imovel['endereco'] ?></h5>
+          <h5>Número: <?= $this->view->imovel['numero'] ?></h5>
+          <h5>Bairro: <?= $this->view->imovel['bairro'] ?></h5>
+          <h5>CEP: <?= $this->view->imovel['cep'] ?></h5>
+        </div>
+      </div>
+
+      <div class="row mb-5">
+        <div class="col-lg-6">
+          <h5>Área útil<?= $this->view->imovel['area_util'] ?></h5>
+          <h5>Área total<?= $this->view->imovel['area_total'] ?></h5>
+        </div>
+
+        <div class="col-lg-6">
+          <h5>Qtd. quartos: <?= $this->view->imovel['quartos'] ?></h5>
+          <h5>Qtd. banheiros: <?= $this->view->imovel['banheiros'] ?></h5>
+          <h5>Qtd. garagens: <?= $this->view->imovel['garagens'] ?></h5>
+          <h5>Qtd. suítes: <?= $this->view->imovel['suites'] ?></h5>
+        </div>
+      </div>
+
+      <div class="row">
+      <div class="col-lg-6">
+        <div class="row">
+          <h5 class="container">Descriçãodo imóvel: </h5>  
+        </div>
+        <div class="row container jumbotron border border-dark">
+          <?= $this->view->imovel['tipo'] ?>
+        </div>      
+      </div>
+      <div class="col-lg-6">
+        <h4>Valor: R$<?= $this->view->imovel['valor'] ?></h4>
+      </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="container jumbotron">
+  <h3 class="text-center">Relatório</h3>
+  <hr>
+  <?php foreach ($this->view->relatorios as $key => $value) { ?>
+    <?= $value['data'] ?> - <?= $value['relatorio'] ?> <br>
+  <?php } ?>
+  <hr>
+  <form action="/adicionar_relatorio?id_imovel=<?= $this->view->imovel['id'] ?>" method="post">
+  <div class="form-group col-lg-6">
+    <label for="areaTexto">Adicionar relatório</label>
+    <textarea name="relatorio" class="form-control" id="areaTexto" rows="3"></textarea>
+    <div class="clearfix">
+    <button type="submit" class="btn btn-success float-right mt-2">Adicionar</button>
+    </div>
+  </div>
+  </form>
+
+  <div class="col-lg-12">
+      <a class="btn btn-success btn-lg float-right" href="/validar_imovelC?id_imovel=<?= $this->view->imovel['id'] ?>" role="button">Validar Imóvel</a>
+  </div>
+  
+</section>

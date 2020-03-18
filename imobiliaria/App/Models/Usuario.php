@@ -54,11 +54,11 @@ class Usuario extends Model {
 				print_r($stmt->errorInfo());
 			}else{
 				move_uploaded_file($this->imagem_perfil['tmp_name'], $diretorio.$nomeImagem);
-				echo "salvou imaegem";
+				echo "salvou imagem";
 			}
 		}
 
-		//return $this;
+		return $this;
 	}
 
 	public function validarCadastro(){
@@ -106,10 +106,24 @@ class Usuario extends Model {
 		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
 	}
 
+	public function getIdProprietarioPorIdUsuario(){
+		$query = "select id from tb_proprietarios where fk_id_usuario = :id_usuario";
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':id_usuario', $this->id);
+
+		if(!$stmt->execute()){
+			echo "<br><br><br><br><br>";
+			print_r($stmt->errorInfo());
+		}
+
+		return $stmt->fetch(\PDO::FETCH_ASSOC);
+	}
+
 	public function autenticar(){
 		$query = "select 
 					id, 
-					nome, 
+					nome,
+					imagem_perfil,
 					email, 
 					comprador, 
 					vendedor, 
@@ -130,6 +144,7 @@ class Usuario extends Model {
 		if($usuario['id'] != '' && $usuario['nome'] != ''){
 			$this->__set('id', $usuario['id']);
 			$this->__set('nome', $usuario['nome']);
+			$this->__set('imagem_perfil', $usuario['imagem_perfil']);
 			$this->__set('comprador', $usuario['comprador']);
 			$this->__set('vendedor', $usuario['vendedor']);
 			$this->__set('administrador', $usuario['administrador']);
@@ -157,7 +172,12 @@ class Usuario extends Model {
 	}
 
 	public function removerCorretor(){
-		$query = "select count(*) from tb_imoveis where corretor_responsavel = :id_usuario";
+		$query = "select 
+					count(*) 
+				  from 
+				  	tb_imoveis 
+				  where 
+				  	corretor_responsavel = :id_usuario and fk_id_status = 5";
 		$stmt = $this->db->prepare($query);
 		$stmt->bindValue(':id_usuario', $this->id);
 
@@ -185,6 +205,19 @@ class Usuario extends Model {
 
 	public function adicionarCorretor(){
 		$query = "update tb_usuarios set corretor = 1 where id = :id_usuario";
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':id_usuario', $this->id);
+
+		if(!$stmt->execute()){
+			echo "<br><br><br><br><br>";
+			print_r($stmt->errorInfo());
+		}
+
+		return true;
+	}
+
+	public function adicionarVendedor(){
+		$query = "update tb_usuarios set vendedor = 1 where id = :id_usuario";
 		$stmt = $this->db->prepare($query);
 		$stmt->bindValue(':id_usuario', $this->id);
 

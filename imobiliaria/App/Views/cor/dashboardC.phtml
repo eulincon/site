@@ -4,60 +4,30 @@
         <div class="card-columns">
           <div class="container">
           
-          <a href="">
+          <a href="/imoveis_para_avaliar">
             <div class="card">
               <div class="card-body">                
                 <div class="card-title text-dark">
                   Imóveis Pendentes
-                  <span class="badge badge-primary">14</span>
+                  <span class="badge badge-primary"><?= $this->view->qtdImoveis ?></span>
                 </div>
               </div>
             </div>
           </a>  
 
-             <div class="card">
+          <a href="/visitas_marcadas">
+            <div class="card">
               <div class="card-body">
-                <div class="card-title">Visitas Marcadas
-                  <span class="badge badge-primary">13</span>
+                <div class="card-title text-dark">Visitas Marcadas
+                  <span class="badge badge-primary"><?= $this->view->visitas ?></span>
                 </div>
               </div>
             </div>
-            
-            <div class="card">
-              <div class="card-body">
-                <div class="card-title">Gerenciar Corretores</div>
-              </div>
-            </div>
+          </a>
 
             <div class="card">
               <div class="card-body">
-                <div class="card-title">Gerenciar Usuários</div>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="card-body">
-                <div class="card-title">Solicitações de Usuários
-                  <span class="badge badge-primary">2</span>
-                </div>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="card-body">
-                <div class="card-title">Mais Opções</div>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="card-body">
-                <div class="card-title">Imagens Carrousel</div>
-              </div>
-            </div>
-
-            <div class="card">
-              <div class="card-body">
-                <div class="card-title">Imóveis Página Inicial</div>
+                <div class="card-title text-danger">Mais Opções</div>
               </div>
             </div>
 

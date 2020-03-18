@@ -33,15 +33,15 @@
 	              </li>
 	              <li class="nav-item dropdown">
 			        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-						|    Olá Sra. Miranda! 
+						|    Olá Sr. <?= $this->view->nome ?>
 			        </a>
 			        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-			          <a class="dropdown-item" href="#">Editar perfil</a>
+			          <a class="dropdown-item text-danger" href="#">Editar perfil</a>
 			          <a class="dropdown-item" href="/sair">Sair</a>
 			        </div>
 			       </li>
               	<div class="media align-self-center">
-				  <img class="mr-3 ml-2 rounded-circle" style="widows: 50px; height: 50px" src="img/miranda_teles.jpeg">
+				  <img class="mr-3 ml-2 rounded-circle" style="width: 50px; height: 50px" src="<?= $this->view->imagem_perfil ?>">
 				</div>
 	            </ul>
 
@@ -58,10 +58,10 @@
 	        <div class="row">
 	          <div class="col-md-8">
 	            <p>
-	              <a href="/">Home</a>
-	              <a href="/error_notfound">Recursos</a>
-	              <a href="/error_notfound">Beneficios</a>
-	              <a href="/error_notfound">Preços</a>
+	              <a href="/dashboard">Home</a>
+	              <a href="#" class="text-danger">Recursos</a>
+	              <a href="#" class="text-danger">Beneficios</a>
+	              <a href="#" class="text-danger">Preços</a>
 	            </p>
 	          </div>
 	          <div class="col-md-4 d-flex justify-content-end">

@@ -5,19 +5,19 @@
           <div class="container">
           
           <a href="/imoveis_pendentes">
-            <div class="card">
+            <div id="caixa" class="card">
               <div class="card-body">                
                 <div class="card-title text-dark">
                   Imóveis Pendentes
-                  <span class="badge badge-primary">14</span>
+                  <span class="badge badge-primary"><?= $this->view->qtdImoveisPendentes ?></span>
                 </div>
               </div>
             </div>
           </a>  
 
-            <div class="card">
+            <div id="caixa" class="card">
               <div class="card-body">
-                <div class="card-title">Visitas Marcadas
+                <div class="card-title text-danger">Visitas Marcadas
                   <span class="badge badge-primary">13</span>
                 </div>
               </div>
@@ -33,13 +33,13 @@
 
             <div class="card">
               <div class="card-body">
-                <div class="card-title">Gerenciar Usuários</div>
+                <div class="card-title text-danger">Gerenciar Usuários</div>
               </div>
             </div>
 
             <div class="card">
               <div class="card-body">
-                <div class="card-title">Solicitações de Usuários
+                <div class="card-title text-danger">Solicitações de Usuários
                   <span class="badge badge-primary">2</span>
                 </div>
               </div>
@@ -47,27 +47,29 @@
 
             <div class="card">
               <div class="card-body">
-                <div class="card-title">Mais Opções</div>
+                <div class="card-title text-danger">Mais Opções</div>
               </div>
             </div>
 
             <div class="card">
               <div class="card-body">
-                <div class="card-title">Imagens Carrousel</div>
+                <div class="card-title text-danger">Imagens Carrousel</div>
               </div>
             </div>
 
             <div class="card">
               <div class="card-body">
-                <div class="card-title">Todos os Imoveis</div>
+                <div class="card-title text-danger">Todos os Imoveis</div>
               </div>
             </div>
 
+            <a href="/imoveis_home">
             <div class="card">
               <div class="card-body">
-                <div class="card-title">Imóveis Página Inicial</div>
+                <div class="card-title text-dark">Imóveis Página Inicial</div>
               </div>
             </div>
+            </a>
 
           </div>
         </div>

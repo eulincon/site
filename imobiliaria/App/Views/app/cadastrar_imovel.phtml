@@ -1,3 +1,4 @@
+
 <div class="jumbotron container">
   <div class="d-flex justify-content-center mt-5">
     <div class="card" style="width: 90rem;">
@@ -12,11 +13,11 @@
         <div class="row">
           <div class="col">
 
-            <form action="/registrarImovel" method="post" encType="multipart/form-data">
+            <form id="cadastroImovel" name="cadastroImovel" action="/registrarImovel" method="post" encType="multipart/form-data"">
 
               <div class="form-group row">
                 <label for="exampleFormControlFile1">Example file input</label>
-                <input name="imagens" accept="image/*" class="file-chooser" type="file" class="form-control-file" id="exampleFormControlFile1">
+                <input name="imagens[]" accept="image/*" class="file-chooser" type="file" class="form-control-file" id="exampleFormControlFile1" multiple="multiple">
                 <div class="media align-self-center jumbotron col-lg-12">
                   <img class="preview-img" style="widows: 100px; height: 100px">
                 </div>
@@ -33,17 +34,24 @@
 
               <div class="form-group row">
                 <label class="col-lg-3 text-right" for="cep">CEP</label>
-                  <input id="cep" name="cep" class="form-control col-lg-9" placeholder="______-__">
+                  <input type="text" id="cep" name="cep" class="form-control col-lg-9" placeholder="Ex.: 00000-000" required>
+              </div>
+
+              <div class="form-group row">
+                <label class="col-lg-3 text-right" for="uf">Estado</label>
+                  <select class="form-control col-lg-9" id="uf">
+                    <option  value="" id="uf" name="uf" ></option>
+                  </select>
               </div>
 
               <div class="form-group row">
                 <label class="col-lg-3 text-right" for="cidade">Cidade</label>
-                  <input name="cidade" class="form-control col-lg-9" id="cidade">
+                  <select name="cidade" class="form-control col-lg-9" id="cidade"></select>
               </div>
               
               <div class="form-group row">
                 <label class="col-lg-3 text-right">Endereço</label>
-                  <input name="endereco" class="form-control col-lg-9" placeholder="Ex.: Rua Mont Alverne">
+                  <input name="endereco" class="form-control col-lg-9" placeholder="Ex.: Rua Mont Alverne" required>
               </div>
 
               <div class="form-group row">
@@ -51,12 +59,12 @@
                     <input name="numero" class="form-control col-lg-3" id="numero" placeholder="1234">
 
                   <label class="col-lg-2 text-right" for="bairro">Bairro</label>
-                    <input name="bairro" class="form-control col-lg-4" id="bairro">
+                    <input name="bairro" class="form-control col-lg-4" id="bairro" required>
               </div>
 
               <div class="form-group row">
                 <label class="col-lg-3 text-right" for="valor">Valor</label>
-                  <input name="valor" class="form-control col-lg-9" id="valor" placeholder="R$">
+                  <input name="valor" class="form-control col-lg-9" id="valor" placeholder="R$" required>
               </div>
 
             </div>
@@ -64,11 +72,13 @@
             <div class="col">
               
               <div class="form-group row">
-                <label class="col-lg-2 text-right" for="areaUtil">Área útil</label>
-                  <input name="areaUtil" class="form-control col-lg-4" id="areaUtil" placeholder="m²">
+                <label class="col-lg-3 text-right" for="areaUtil">Área útil</label>
+                  <input name="areaUtil" class="form-control col-lg-9" id="areaUtil" placeholder="m²" required>
+              </div>
 
-                <label class="col-lg-2 text-right" for="areaTotal">Área total</label>
-                  <input name="areaTotal" class="form-control col-lg-4" id="areaTotal" placeholder="m²">
+              <div class="form-group row">
+                <label class="col-lg-3 text-right" for="areaTotal">Área total</label>
+                  <input name="areaTotal" class="form-control col-lg-9" id="areaTotal" placeholder="m²" required>
               </div>
 
               <div class="form-group row">
@@ -83,6 +93,7 @@
               <div class="form-group row">
                   <label class="col-lg-3 text-right" id="numero">Quartos</label>
                     <select name="quartos" class="col-lg-3 form-control" id="tNegocio">
+                    <option>0</option>
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -93,6 +104,7 @@
 
                   <label class="col-lg-3 text-right" for="bairro">Banheiros</label>
                     <select name="banheiros" class="col-lg-3 form-control" id="tNegocio">
+                    <option>0</option>
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -105,6 +117,7 @@
               <div class="form-group row">
                   <label class="col-lg-3 text-right" id="numero">Garagens</label>
                     <select name="garagens" class="col-lg-3 form-control" id="tNegocio">
+                    <option>0</option>
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -115,6 +128,7 @@
 
                   <label class="col-lg-3 text-right" for="bairro">Suítes</label>
                     <select name="suites" class="col-lg-3 form-control" id="tNegocio">
+                    <option>0</option>
                     <option>1</option>
                     <option>2</option>
                     <option>3</option>
@@ -136,7 +150,42 @@
                 <small class="form-text text-danger">*Erro ao tentar realizar o cadastro, verifique se os campos foram preenchidos corretamente</small>
               <?php } ?>
             </form>
-            <script>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+              $("#cadastroImovel").validate({
+                rules:{
+                  areaTotal:{
+                    required: true,
+                    maxlength: 3
+                  },
+                  valor:{
+                    required: true,
+                    minlength: 5
+                  },
+                  areaUtil:{
+                    required: true,
+                    minlength: 3
+                  },
+                  areaTexto:{
+                    required:true
+                  },
+                  numero:{
+                    required: true,
+                    maxlength: 3
+                  }
+                  
+                }
+              });
+            </script>
+
+
+            <!--<script>
               const $ = document.querySelector.bind(document);
               const previewImg = $('.preview-img');
               const fileChooser = $('.file-chooser');
@@ -152,12 +201,116 @@
                 // Isso disparará o evento reader.onload.
                 reader.readAsDataURL(fileToUpload);
               };
+
+              function validacao(){
+                var formulario = document.forms['cadastroImovel']
+                var endereco = formulario.endereco.value
+                var aUtil = formulario.areaUtil.value
+                var aTotal = formulario.areaTotal.value
+                var erro = false
+
+                if(endereco.indexOf(' ') == -1){
+                  alert("Endereço vazio!");
+                  erro = true
+                }
+                return false
+              }
+            </script>-->
+            <script type="text/javascript">
+              
+                $.getJSON('http://mendesepereira.neuroteks.com/entrevista/estados_cidades.json', function (data) {
+
+                  var items = [];
+                  var options = '<option value="">escolha um estado</option>';  
+
+                  $.each(data, function (key, val) {
+                    options += '<option value="' + val.sigla + '">' + val.nome + '</option>';
+                  });         
+                  $("#uf").html(options);       
+                  
+                  $("#uf").change(function () {      
+                  
+                    var options_cidades = '';
+                    var str = "";         
+                    
+                    $("#uf option:selected").each(function () {
+                      str += $(this).text();
+                    });
+                    
+                    $.each(data, function (key, val) {
+                      if(val.nome == str) {             
+                        $.each(val.cidades, function (key_city, val_city) {
+                          options_cidades += '<option value="' + val_city + '">' + val_city + '</option>';                
+                        });         
+                      }
+                    });
+
+                    $("#cidade").html(options_cidades);
+                    
+                  }).change();
+
+                  $("#cidade").val($("#cidade"))
+
+
+
+                });
+              
             </script>
 
-          </div>
-        </div>
+            <script type="text/javascript">
+              $('#valor').mask('000.000.000.000.000,00', {reverse: true});
+              $('#areaUtil').mask('000,00', {reverse: true});
+              $('#areaTotal').mask('000,00', {reverse: true});
+              $('#cep').mask('00000-000');
 
-      </div>
-    </div>
-  </div>
-</div>
+              $("#cep").focusout(function(){
+                //Início do Comando AJAX
+                $.ajax({
+                  //O campo URL diz o caminho de onde virá os dados
+                  //É importante concatenar o valor digitado no CEP
+                  url: 'https://viacep.com.br/ws/'+$(this).val()+'/json/unicode/',
+                  //Aqui você deve preencher o tipo de dados que será lido,
+                  //no caso, estamos lendo JSON.
+                  dataType: 'json',
+                  //SUCESS é referente a função que será executada caso
+                  //ele consiga ler a fonte de dados com sucesso.
+                  //O parâmetro dentro da função se refere ao nome da variável
+                  //que você vai dar para ler esse objeto.
+                  success: function(resposta){
+                    //Agora basta definir os valores que você deseja preencher
+                    //automaticamente nos campos acima.
+                    $("#endereco").val(resposta.logradouro);
+                    //$("#complemento").val(resposta.complemento);
+                    $("#bairro").val(resposta.bairro);
+                    $("#uf").val(resposta.uf);
+                    $.getJSON('http://mendesepereira.neuroteks.com/entrevista/estados_cidades.json', function (data) {
+
+                      var items = [];
+                      var options = '<option value="">escolha um estado</option>';     
+                      
+                        var options_cidades = '';
+                        var str = "";         
+                        
+                        $("#uf option:selected").each(function () {
+                          str += $(this).text();
+                        });
+                        
+                        $.each(data, function (key, val) {
+                          if(val.nome == str) {             
+                            $.each(val.cidades, function (key_city, val_city) {
+                              options_cidades += '<option value="' + val_city + '">' + val_city + '</option>';                
+                            });         
+                          }
+                        });
+
+                        $("#cidade").html(options_cidades);
+
+                    $("#cidade").val(resposta.localidade);
+                    });
+                    //Vamos incluir para que o Número seja focado automaticamente
+                    //melhorando a experiência do usuário
+                    $("#numero").focus();
+                  }
+                });
+              });
+            </script>

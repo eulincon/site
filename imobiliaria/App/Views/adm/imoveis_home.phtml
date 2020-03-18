@@ -1,0 +1,80 @@
+<section style="padding-top: 80px;" class="container">
+	<h3>Imoveis Visíveis na Pagina Inicial</h3>
+</section>
+
+<section>
+<!-- Início de sessão Cards-->
+      <div class="card-columns container jumbotron">
+
+        <?php foreach ($this->view->imoveis as $key => $value) {?>
+
+          <div class="card">
+            <img class="card-img-top" src="https://source.unsplash.com/random/400x200">
+            <div class="card-body">
+              <div>
+              <h5 class="card-title"><?= $value['tipo'] ?></h5>
+              </div>
+              <div>
+                <?php if($value['endereco'] != '') { ?>
+                <h6 class="card-subtitle"><?= $value['endereco'] ?>, <?= $value['numero'] ?> - <?= $value['bairro'] ?></h6>
+                <?php }else{ ?>
+                  <h6> </h6>
+                <?php } ?>
+              </div>
+              <div>
+              <h6>R$ <?= $value['valor'] ?></h6>
+              </div>
+
+              <div class="row" style="padding-top: 1em">
+                <div class="col">
+                  <div class="row d-flex justify-content-center">
+                    <i class="fas fa-2x fa-bath"></i>
+                  </div>
+                  <div class="row d-flex justify-content-center">
+                    <small>
+                    <?= $value['banheiros'] ?> Banheiro(s)
+                    </small>
+                  </div>                
+                </div>
+
+
+                <?php if($value['area_util'] > 0){ ?>
+                <div class="col">
+                  <div class="row d-flex justify-content-center">
+                    <i class="fas fa-2x fa-vector-square"></i>
+                  </div>
+                  <div class="row d-flex justify-content-center">
+                    <small>
+                    <?= $value['area_util'] ?>m²
+                    </small>
+                  </div>
+                </div>
+                <?php } ?>
+
+
+                <div class="col">
+                  <div class="row d-flex justify-content-center">
+                    <i class="fas fa-2x fa-bed"></i>
+                  </div>
+                  <div class="row d-flex justify-content-center">
+                    <small>
+                    <?= $value['quartos'] ?> Quarto(s)
+                    </small>
+                  </div>  
+                </div>
+              </div>
+              <div class="d-flex justify-content-end" style="padding-top: 1em">
+                <?php if($value['mostrar_na_index'] == 0) {?>
+                <a href="/acao_imovel?acao=set_index&id_imovel=<?=$value['id'] ?>" class="btn btn-success">Tornar visível</a>
+                <?php } ?>
+
+                <?php if($value['mostrar_na_index'] == 1) {?>
+                <a href="/acao_imovel?acao=unset_index&id_imovel=<?=$value['id'] ?>" class="btn btn-danger">Ocultar</a>
+                <?php } ?>
+              </div>
+            </div>
+          </div>
+        <?php } ?>
+        </div>
+        <?php echo "<pre>"; print_r($this->view->imoveis); echo "</pre>"; ?>
+</section>

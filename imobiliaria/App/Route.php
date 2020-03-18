@@ -80,13 +80,7 @@ class Route extends Bootstrap {
 			'controller' => 'IndexController',
 			'action' => 'ver_imagem'
 		);
-
-		$routes['modulo'] = array(
-			'route' => '/modulo',
-			'controller' => 'IndexController',
-			'action' => 'modulo'
-		);
-
+		
 		$routes['dashboardC'] = array(
 			'route' => '/dashboardC',
 			'controller' => 'CorController',
@@ -111,11 +105,24 @@ class Route extends Bootstrap {
 			'action' => 'imoveis_pendentes'
 		);
 
+		$routes['imoveis_para_avaliar'] = array(
+			'route' => '/imoveis_para_avaliar',
+			'controller' => 'CorController',
+			'action' => 'imoveis_para_avaliar'
+		);
+
 		$routes['imoveis_avaliacao'] = array(
 			'route' => '/imovel_avaliacao',
 			'controller' => 'AdmController',
 			'action' => 'imovel_avaliacao'
 		);
+
+		$routes['avaliar_imovelC'] = array(
+			'route' => '/avaliar_imovelC',
+			'controller' => 'CorController',
+			'action' => 'avaliar_imovelC'
+		);
+
 
 		$routes['acao_imovel'] = array(
 			'route' => '/acao_imovel',
@@ -152,6 +159,55 @@ class Route extends Bootstrap {
 			'controller' => 'AppController',
 			'action' => 'imovel_detalhes'
 		);
+
+		$routes['imovel_detalhesNoUser'] = array(
+			'route' => '/imovel_detalhesNoUser',
+			'controller' => 'IndexController',
+			'action' => 'imovel_detalhesNoUser'
+		);
+
+		$routes['imoveis_home'] = array(
+			'route' => '/imoveis_home',
+			'controller' => 'AdmController',
+			'action' => 'imoveis_home'
+		);
+
+		$routes['adicionar_relatorio'] = array(
+			'route' => '/adicionar_relatorio',
+			'controller' => 'CorController',
+			'action' => 'adicionar_relatorio'
+		);
+
+		$routes['validar_imovelC'] = array(
+			'route' => '/validar_imovelC',
+			'controller' => 'CorController',
+			'action' => 'validar_imovelC'
+		);
+
+		$routes['meus_imoveis'] = array(
+			'route' => '/meus_imoveis',
+			'controller' => 'AppController',
+			'action' => 'meus_imoveis'
+		);
+
+		$routes['visitas_marcadas'] = array(
+			'route' => '/visitas_marcadas',
+			'controller' => 'CorController',
+			'action' => 'visitas_marcadas'
+		);
+
+		$routes['marcar_visita'] = array(
+			'route' => '/marcar_visita',
+			'controller' => 'CorController',
+			'action' => 'marcar_visita'
+		);
+
+		$routes['acao_cor'] = array(
+			'route' => '/acao_cor',
+			'controller' => 'CorController',
+			'action' => 'acao_cor'
+		);
+
 
 		$this->setRoutes($routes);
 	}

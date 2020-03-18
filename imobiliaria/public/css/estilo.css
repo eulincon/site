@@ -38,3 +38,12 @@ nav.navbar-transparente{
     color: rgba(255,255,255,.5);
 	border-color: rgba(255,255,255,.5);
 }
+
+#caixa{
+
+}
+
+#caixa:hover{
+	background: orange;
+	transition: background 1s;
+}

@@ -25,6 +25,8 @@ class Imovel extends Model {
 	private $banheiros;
 	private $garagens;
 	private $suites;
+	private $imagens;
+	private $horario_visita;
 
 	public function __get($attr){
 		return $this->$attr;
@@ -111,7 +113,28 @@ class Imovel extends Model {
 			echo "</pre>";
 			return false;
 		}
-		
+
+		$this->id = $this->db->lastInsertId();
+		$diretorio = "img/imoveis/".$this->id."/";
+		mkdir($diretorio, 0755);
+
+		$count = count($this->imagens['tmp_name']);
+
+		for ($i=0; $i < $count; $i++) { 
+			$nomeImagem = time().$this->imagens['name'][$i];
+			$query = "insert tb_imagens_imovel (fk_id_imovel, imagem) values (:id_imovel, :imagem)";
+			$stmt = $this->db->prepare($query);
+			$stmt->bindValue(':imagem', $diretorio.$nomeImagem);
+			$stmt->bindValue(':id_imovel', $this->id);
+
+			if(!$stmt->execute()){
+				echo "<br><br><br><br><br>";
+				print_r($stmt->errorInfo());
+			}else{
+				move_uploaded_file($this->imagens['tmp_name'][$i], $diretorio.$nomeImagem);
+				echo "salvou imaegem";
+			}
+		}
 
 		return true;
 	}
@@ -139,11 +162,15 @@ class Imovel extends Model {
 			select 
 				i.*,
 				t.tipo,
-				s.status
+				s.status,
+				p.fk_id_usuario,
+				u.nome
 			from 
 				tb_imoveis as i
 				left join tb_tipo_imovel as t on(t.id = i.fk_id_tipo)
 				left join tb_status_imovel as s on(s.id = i.fk_id_status)
+				left join tb_proprietarios as p on(p.id = i.fk_id_proprietario)
+				left join tb_usuarios as u on(p.fk_id_usuario = u.id)
 			where i.id = :id
 		";
 		$stmt = $this->db->prepare($query);
@@ -155,7 +182,44 @@ class Imovel extends Model {
 		}
 
 		return $stmt->fetch(\PDO::FETCH_ASSOC);
+	}
 
+	public function getImoveisPorProprietario(){
+		$query = "
+			select 
+				i.*,
+				t.tipo
+			from 
+				tb_imoveis as i
+				left join tb_tipo_imovel as t on(t.id = i.fk_id_tipo)
+			where i.fk_id_proprietario = :id_proprietario
+		";
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':id_proprietario', $this->fk_id_proprietario);
+
+		if(!$stmt->execute()){
+			echo "<br><br><br><br>";
+			print_r($stmt->errorInfo());
+		}
+
+		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+	}
+
+	public function agendarVisita(){
+		$query = "update tb_imoveis 
+				  set horario_visita = :horario_visita 
+				  where id = :id";
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':horario_visita', $this->horario_visita);
+		$stmt->bindValue(':id', $this->id);
+
+		if(!$stmt->execute()){
+			echo "<br><br><br><br><br>";
+			print_r($stmt->errorInfo());
+			return false;
+		}
+
+		return true;
 	}
 
 	public function getImoveisPendentes(){
@@ -167,6 +231,77 @@ class Imovel extends Model {
 				tb_imoveis as i
 				left join tb_tipo_imovel as t on(t.id = i.fk_id_tipo)
 			where i.fk_id_status = 5
+
+		";
+
+		$stmt = $this->db->prepare($query);
+
+		if(!$stmt->execute()){
+			echo "<br><br><br><br>";
+			print_r($stmt->errorInfo());
+		}
+
+		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+	}
+
+	public function getImoveisPendentesPorCorretor(){
+		$query = "
+			select 
+				i.*,
+				t.tipo
+			from 
+				tb_imoveis as i
+				left join tb_tipo_imovel as t on(t.id = i.fk_id_tipo)
+			where i.fk_id_status = 5 and i.corretor_responsavel = :corretor_responsavel 
+
+		";
+
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':corretor_responsavel', $this->corretor_responsavel);
+
+		if(!$stmt->execute()){
+			echo "<br><br><br><br>";
+			print_r($stmt->errorInfo());
+		}
+
+		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+	}
+
+	public function getVisitasMarcadas(){
+		$query = "
+			select 
+				i.*,
+				t.tipo,
+				DATE_FORMAT(i.horario_visita, '%d/%m/%Y %H:%i') as data
+			from 
+				tb_imoveis as i
+				left join tb_tipo_imovel as t on(t.id = i.fk_id_tipo)
+			where 
+				i.fk_id_status = 5 and 
+				i.corretor_responsavel = :corretor_responsavel and
+				i.horario_visita is not null
+		";
+
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':corretor_responsavel', $this->corretor_responsavel);
+
+		if(!$stmt->execute()){
+			echo "<br><br><br><br>";
+			print_r($stmt->errorInfo());
+		}
+
+		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+	}
+
+	public function getImoveisDisponiveis(){
+		$query = "
+			select 
+				i.*,
+				t.tipo
+			from 
+				tb_imoveis as i
+				left join tb_tipo_imovel as t on(t.id = i.fk_id_tipo)
+			where i.fk_id_status = 3
 
 		";
 
@@ -220,6 +355,21 @@ class Imovel extends Model {
 		return $this;
 	}
 
+	public function getImagensImovelPorId($id){
+		$query = "select imagem 
+				  from tb_imagens_imovel 
+				  where fk_id_imovel = :id_imovel";
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue('id_imovel', $id);
+
+		if(!$stmt->execute()){
+			echo "<br><br><br><br><br>";
+			print_r($stmt->errorInfo());
+		}
+
+		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+	}
+
 	public function setNullCorretorResponsavel(){
 		$query = "update tb_imoveis set corretor_responsavel = NULL where id = :id_imovel";
 		$stmt = $this->db->prepare($query);
@@ -241,7 +391,34 @@ class Imovel extends Model {
 		if(!$stmt->execute()){
 			echo "<br><br><br><br><br>";
 			print_r($stmt->errorInfo());
+			return false;
 		}
+		return true;
+	}
+
+	public function setMostrarNaIndex(){
+		$query = "update tb_imoveis set mostrar_na_index = 1 where id = :id_imovel";
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':id_imovel', $this->id);
+
+		if(!$stmt->execute()){
+			echo "<br><br><br><br><br>";
+			print_r($stmt->errorInfo());
+		}
+		return true;
+	}
+
+	public function unsetMostrarNaIndex(){
+		echo $this->id;
+		$query = "update tb_imoveis set mostrar_na_index = 0 where id = :id_imovel";
+		$stmt = $this->db->prepare($query);
+		$stmt->bindValue(':id_imovel', $this->id);
+
+		if(!$stmt->execute()){
+			echo "<br><br><br><br><br>";
+			print_r($stmt->errorInfo());
+		}
+		return true;
 	}
 
 }

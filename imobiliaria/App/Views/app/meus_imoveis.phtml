@@ -1,0 +1,80 @@
+<section style="padding-top: 80px;" class="container">
+	<h3>Meus Imoveis</h3>
+</section>
+
+<section>
+<!-- Início de sessão Cards-->
+      <div class="card-columns container jumbotron">
+
+        <?php foreach ($this->view->imoveis as $key => $value) {?>
+
+          <div class="card">
+            <img class="card-img-top" src="https://source.unsplash.com/random/400x200">
+            <div class="card-body">
+              <div>
+              <h5 class="card-title"><?= $value['tipo'] ?></h5>
+              </div>
+              <div>
+              <h6 class="card-subtitle"><?= $value['endereco'] ?></h6>
+              </div>
+              <div>
+              <h6>R$ <?= $value['valor'] ?></h6>
+              </div>
+
+              <div class="row" style="padding-top: 1em">
+                <div class="col">
+                  <div class="row d-flex justify-content-center">
+                    <i class="fas fa-2x fa-bath"></i>
+                  </div>
+                  <div class="row d-flex justify-content-center">
+                    <small>
+                    <?= $value['banheiros'] ?> Banheiro(s)
+                    </small>
+                  </div>                
+                </div>
+
+
+                <?php if($value['area_util'] > 0){ ?>
+                <div class="col">
+                  <div class="row d-flex justify-content-center">
+                    <i class="fas fa-2x fa-vector-square"></i>
+                  </div>
+                  <div class="row d-flex justify-content-center">
+                    <small>
+                    <?= $value['area_util'] ?>m²
+                    </small>
+                  </div>
+                </div>
+                <?php } ?>
+
+
+                <div class="col">
+                  <div class="row d-flex justify-content-center">
+                    <i class="fas fa-2x fa-bed"></i>
+                  </div>
+                  <div class="row d-flex justify-content-center">
+                    <small>
+                    <?= $value['quartos'] ?> Quarto(s)
+                    </small>
+                  </div>  
+                </div>
+              </div>
+              <div class="d-flex justify-content-end" style="padding-top: 1em">
+                <?php if($value['fk_id_status'] == 3) { ?>
+                  <h5><span class="badge badge-primary">Disponível</span></h5>
+                <?php } ?>
+                <?php if($value['fk_id_status'] == 1) { ?>
+                  <h5><span class="badge badge-success">Alugado</span></h5>
+                <?php } ?>
+                <?php if($value['fk_id_status'] == 2) { ?>
+                  <h5><span class="badge badge-success">Vendido</span></h5>
+                <?php } ?>
+                <?php if($value['fk_id_status'] == 5) { ?>
+                  <h5><span class="badge badge-danger">Aguardando avaliação</span></h5>
+                <?php } ?>
+              </div>
+            </div>
+          </div>
+        <?php } ?>
+        </div>
+</section>

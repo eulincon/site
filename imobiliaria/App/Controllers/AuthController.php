@@ -22,16 +22,17 @@ class AuthController extends Action{
 			session_start();
 			$_SESSION['id'] = $usuario->__get('id');
 			$_SESSION['nome'] = $usuario->__get('nome');
+			$_SESSION['imagem_perfil'] = $usuario->imagem_perfil;
+			$_SESSION['administrador'] = $usuario->administrador;
+			$_SESSION['comprador'] = $usuario->comprador;
+			$_SESSION['corretor'] = $usuario->corretor;
+			$_SESSION['vendedor'] = $usuario->vendedor;
 
-			echo "<br><br><br><br><br><br>";
-			echo $usuario->administrador."asdsad";
-			echo $usuario->comprador."asdsad";
-			echo $usuario->corretor."asdsad";
 
 			if($usuario->__get('administrador')){
 				header('Location: /dashboard');
 			}elseif($usuario->__get('comprador') && $usuario->__get('corretor')){
-				header("Location: /modulo");
+				header("Location: /dashboardC");
 			}elseif($usuario->__get('comprador')){
 				header("Location: /timeline");
 			}elseif($usuario->__get('corretor')){
